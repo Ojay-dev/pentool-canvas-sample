@@ -4,6 +4,8 @@ const GlobalPenToolContext = createContext();
 const GlobalPenToolActionsContext = createContext();
 const GlobalUndoContext = createContext();
 const GlobalUndoActionsContext = createContext();
+const GlobalRedoContext = createContext();
+const GlobalRedoActionsContext = createContext();
 
 const factoryUseContext = (name, context) => {
   return () => {
@@ -16,7 +18,6 @@ const factoryUseContext = (name, context) => {
     return ctx;
   };
 };
-
 
 export const useGlobalPenToolContext = factoryUseContext(
   "GlobalPenToolContext",
@@ -38,18 +39,31 @@ export const useGlobalUndoActionsContext = factoryUseContext(
   GlobalUndoActionsContext
 );
 
+export const useGlobalRedoContext = factoryUseContext(
+  "GlobalRedoContext",
+  GlobalRedoContext
+);
+
+export const useGlobalRedoActionsContext = factoryUseContext(
+  "GlobalRedoActionsContext",
+  GlobalRedoActionsContext
+);
 
 const GlobalPenToolContextProvider = (props) => {
-  const [isPenTool, setPenTool] = useState(false);
-  const [undo, setUndo] = useState(false);
-  const [redo, setRedo] = useState(false);
+  const [isPenTool, setPenTool] = useState({});
+  const [undo, setUndo] = useState({});
+  const [redo, setRedo] = useState({});
 
   return (
     <GlobalPenToolContext.Provider value={isPenTool}>
       <GlobalPenToolActionsContext.Provider value={setPenTool}>
         <GlobalUndoContext.Provider value={undo}>
           <GlobalUndoActionsContext.Provider value={setUndo}>
-            {props.children}
+            <GlobalRedoContext.Provider value={redo}>
+              <GlobalRedoActionsContext.Provider value={setRedo}>
+                {props.children}
+              </GlobalRedoActionsContext.Provider>
+            </GlobalRedoContext.Provider>
           </GlobalUndoActionsContext.Provider>
         </GlobalUndoContext.Provider>
       </GlobalPenToolActionsContext.Provider>

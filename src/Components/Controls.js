@@ -1,35 +1,24 @@
-import React from 'react';
+import React from "react";
 import {
-	useGlobalPenToolContext,
-	useGlobalPenToolActionsContext,
-	useGlobalUndoContext,
-	useGlobalUndoActionsContext,
-} from '../Context/GlobalPenToolContext';
+  useGlobalPenToolContext,
+  useGlobalUndoContext,
+  useGlobalRedoContext,
+} from "../Context/GlobalPenToolContext";
 
 const Controls = () => {
-  const setPenTool = useGlobalPenToolActionsContext();
-	const setUndo = useGlobalUndoActionsContext();
-	return (
-		<div>
-      <button 
-      // onClick={penToolInit}
-      >pencil</button>
-			<button
-				// onClick={() => {
-				// 	history.undo();
-				// }}
-			>
-				undo
-			</button>
-			<button
-				// onClick={() => {
-				// 	history.redo();
-				// }}
-			>
-				redo
-			</button>
-		</div>
-	);
+  const {init} = useGlobalPenToolContext();
+  const {undo} = useGlobalUndoContext();
+  const {redo} = useGlobalRedoContext();
+
+  // console.log(isPenTool.init);
+
+  return (
+    <div>
+      <button onClick={init}>pencil</button>
+      <button onClick={undo}>undo</button>
+      <button onClick={redo}>redo</button>
+    </div>
+  );
 };
 
 export default Controls;

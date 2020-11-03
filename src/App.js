@@ -6,8 +6,8 @@ import Controls from "./Components/Controls"
 function App(props) {
   return (
    <GlobalPenToolContextProvider>
-     <PenToolCanvas/>
      <Controls />
+     <PenToolCanvas/>
    </GlobalPenToolContextProvider>
   );
 }
